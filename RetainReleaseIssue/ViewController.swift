@@ -14,7 +14,7 @@ class ViewController: UIViewController {
 
     var timer: Timer? = nil
     
-    let items = [StopResultViewModel(result: StopSearchResultItem(stopID: "123", displayName: "123", coordinate: CLLocationCoordinate2D(latitude: 1.0, longitude: 2.0)))] as [SearchListPresentable]
+    let items = [StopResultViewModel()] as [SearchListPresentable]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,19 +50,12 @@ class ViewController: UIViewController {
     
 }
 
-public protocol SearchedItem {
-    
-    func isEqualToSearchItem(another: SearchedItem) -> Bool
-    
-}
 
 public protocol SearchListPresentable {
     
     var searchResultTitle: String { get }
     
     var searchResultSubtitle: String? { get }
-    
-    var searchedItem: SearchedItem { get }
     
 }
 
@@ -74,81 +67,29 @@ public protocol SearchPresentable: SearchListPresentable, MapAnnotation {
     
 }
 
-open class StopSearchResultItem {
-    
-    open let stopID: String
-    
-    open let displayName: String
-    
-    open let coordinate: CLLocationCoordinate2D
-    
-    public init(stopID: String, displayName: String, coordinate: CLLocationCoordinate2D) {
-        self.stopID = stopID
-        self.displayName = displayName
-        self.coordinate = coordinate
-    }
-}
-
-extension StopSearchResultItem: SearchedItem {
-    
-    public func isEqualToSearchItem(another: SearchedItem) -> Bool {
-        if let another = another as? StopSearchResultItem {
-            return another.stopID == self.stopID
-        }
-        return false
-    }
-}
-
 class StopResultViewModel: NSObject, SearchPresentable, BNLocating, MKAnnotation {
-    
-    private let result: StopSearchResultItem
-    
-    private let debugTitle: String
-    
-    init(result: StopSearchResultItem) {
-        self.result = result
-        self.debugTitle = result.displayName
-    }
     
     // MARK: SearchPresentable
     
-    open var searchResultTitle: String { return self.result.displayName }
+    open var searchResultTitle: String { return "" }
     
     open let searchResultSubtitle: String? = nil
     
-    public var coordinate: CLLocationCoordinate2D { return self.result.coordinate }
+    public var coordinate: CLLocationCoordinate2D { return CLLocationCoordinate2D(latitude: 1, longitude: 2) }
     
     // Title and subtitle for use by selection UI.
-    public var title: String? {
-        return result.displayName
-    }
-    
-    public var subtitle: String? { return nil }
+    public var title: String? = ""
+    public var subtitle: String? = nil
     
     // MARK: BNLocatable
     
     public let address: AddressInfo? = nil
     
-    public var displayName: String? { return self.result.displayName }
-    
-    public var searchedItem: SearchedItem { return self.result }
-    
-    //    deinit {
-    //
-    ////        var s = self
-    ////        withUnsafePointer(to: &s) { p in
-    ////            //print(" str value \(str) has address: \($0)")
-    ////            print("StopResultViewModel(\(p)).deinit - \(self.debugTitle)")
-    ////        }
-    //
-    ////        print("StopResultViewModel(\(self.debugTitle)).deinit")
-    //        let desc = self.debugDescription
-    //        print("--> deinit: \(desc)")
-    //    }
+    public var displayName: String? { return "" }
     
     override var debugDescription: String {
         let address = NSString(format: "%p", self)
-        return "<StopResultViewModel: \(address), \(self.debugTitle)>"
+        return "<StopResultViewModel: \(address)>"
     }
 }
 
