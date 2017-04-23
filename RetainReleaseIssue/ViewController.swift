@@ -20,19 +20,17 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
-            switch self.items[0] {
-            case let _ as SearchPresentable:
-                break
-            default:
-                break
-            }
-        }
+        doTheSwitch(items[0])
+        doTheSwitch(items[0])
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    private func doTheSwitch(_ item: SearchListPresentable) {
+        switch item {
+        case let _ as SearchPresentable:
+            break
+        default:
+            break
+        }
     }
 }
 
