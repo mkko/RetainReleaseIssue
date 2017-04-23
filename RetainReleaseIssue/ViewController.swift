@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import MapKit
 import Contacts
 
 class ViewController: UIViewController {
@@ -48,9 +47,4 @@ public protocol SubBogusProtocol: BogusProtocol, SomeObjectProtocol {
 
 class StopResultViewModel: NSObject, SubBogusProtocol {
     
-    public var title: String? = ""
-    
-    public var subtitle: String? = nil
-    
-    public var coordinate: CLLocationCoordinate2D { return CLLocationCoordinate2D(latitude: 1, longitude: 2) }
 }
