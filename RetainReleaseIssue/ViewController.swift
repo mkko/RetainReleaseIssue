@@ -7,25 +7,21 @@
 //
 
 import UIKit
-import Contacts
 
 class ViewController: UIViewController {
-
-    var timer: Timer? = nil
     
-    let items = [StopResultViewModel()] as [BogusProtocol]
+    let items = [SomeClass()] as [BaseProtocol]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         doTheSwitch(items[0])
         doTheSwitch(items[0])
     }
     
-    private func doTheSwitch(_ item: BogusProtocol) {
+    func doTheSwitch(_ item: BaseProtocol) {
         switch item {
-        case let _ as SubBogusProtocol:
+        case let _ as SubProtocol:
             break
         default:
             break
@@ -33,18 +29,10 @@ class ViewController: UIViewController {
     }
 }
 
-public protocol SomeObjectProtocol : NSObjectProtocol {
-    
-}
+public protocol SomeObjectProtocol : NSObjectProtocol { }
 
-public protocol BogusProtocol {
-    
-}
+public protocol BaseProtocol { }
 
-public protocol SubBogusProtocol: BogusProtocol, SomeObjectProtocol {
-    
-}
+public protocol SubProtocol: BaseProtocol, SomeObjectProtocol { }
 
-class StopResultViewModel: NSObject, SubBogusProtocol {
-    
-}
+class SomeClass: NSObject, SubProtocol { }
