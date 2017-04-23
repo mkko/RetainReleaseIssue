@@ -14,7 +14,7 @@ class ViewController: UIViewController {
 
     var timer: Timer? = nil
     
-    let items = [StopResultViewModel()] as [SearchListPresentable]
+    let items = [StopResultViewModel()] as [BogusProtocol]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,9 +24,9 @@ class ViewController: UIViewController {
         doTheSwitch(items[0])
     }
     
-    private func doTheSwitch(_ item: SearchListPresentable) {
+    private func doTheSwitch(_ item: BogusProtocol) {
         switch item {
-        case let _ as SearchPresentable:
+        case let _ as SubBogusProtocol:
             break
         default:
             break
@@ -34,26 +34,23 @@ class ViewController: UIViewController {
     }
 }
 
-public protocol SearchListPresentable {
+public protocol SomeObjectProtocol : NSObjectProtocol {
     
 }
 
-public protocol SearchPresentable: SearchListPresentable, MKAnnotation {
+public protocol BogusProtocol {
     
 }
 
-class StopResultViewModel: NSObject, SearchPresentable, MKAnnotation {
+public protocol SubBogusProtocol: BogusProtocol, SomeObjectProtocol {
+    
+}
+
+class StopResultViewModel: NSObject, SubBogusProtocol {
     
     public var title: String? = ""
     
     public var subtitle: String? = nil
     
     public var coordinate: CLLocationCoordinate2D { return CLLocationCoordinate2D(latitude: 1, longitude: 2) }
-    
-    public var displayName: String? { return "" }
-    
-    override var debugDescription: String {
-        let address = NSString(format: "%p", self)
-        return "<StopResultViewModel: \(address)>"
-    }
 }
